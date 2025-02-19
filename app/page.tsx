@@ -13,7 +13,7 @@ const FechaFormateada = dynamic(() => import('@/components/FechaFormateada').the
   ssr: false,
 })
 
-export default function EmpleadosPage() {
+export default function HomePage() {
   const { theme, toggleTheme } = useTheme()
   const [empleados, setEmpleados] = useState<Empleado[]>([])
   const [departamentos, setDepartamentos] = useState<string[]>([])
