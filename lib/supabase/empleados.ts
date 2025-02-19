@@ -29,6 +29,11 @@ interface FiltrosBusqueda {
   salario_max?: number
 }
 
+interface EmpleadoData {
+  departamento: string;
+  [key: string]: any;
+}
+
 // Obtener todos los empleados con filtros opcionales
 export async function obtenerEmpleados(filtros?: FiltrosBusqueda) {
   let query = supabase
@@ -119,8 +124,14 @@ export async function obtenerDepartamentos() {
 
   if (error) throw error
   
-  // Filtrar departamentos únicos manualmente
-  const departamentosUnicos = [...new Set(data.map((item: { departamento: string }) => item.departamento))]
+  // Filtrar departamentos únicos usando reduce
+  const departamentosUnicos = data.reduce((acc: string[], item: EmpleadoData) => {
+    if (!acc.includes(item.departamento)) {
+      acc.push(item.departamento)
+    }
+    return acc
+  }, [])
+  
   return departamentosUnicos
 }
 

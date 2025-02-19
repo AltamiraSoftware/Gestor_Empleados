@@ -1,18 +1,15 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useParams } from 'next/navigation'
 import { obtenerEmpleado, actualizarEmpleado, Empleado } from '@/lib/supabase/empleados'
 import { FechaFormateada } from '@/components/FechaFormateada'
-import { use } from 'react'
 
-interface PageProps {
-  params: Promise<{ id: string }>
-}
-
-export default function DetalleEmpleado({ params }: PageProps) {
+export default function DetalleEmpleado() {
   const router = useRouter()
-  const { id } = use(params)
+  const params = useParams()
+  const id = params.id as string
+  
   const [empleado, setEmpleado] = useState<Empleado | null>(null)
   const [editando, setEditando] = useState(false)
   const [datosEditados, setDatosEditados] = useState<Partial<Empleado>>({})
